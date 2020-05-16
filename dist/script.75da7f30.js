@@ -118,6 +118,8 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"script.js":[function(require,module,exports) {
+var _items, _columnsTotal;
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -130,7 +132,7 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -138,265 +140,196 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var monthlyColumns = document.querySelector('.monthlyColumns');
 var incomeMonthly = document.querySelector('.grid-header__one h3');
 var incomeInput = document.querySelector('[name="income"]');
 var incomeAmountNumber = document.querySelector('.income');
-var columnAmount = monthlyColumns.querySelectorAll('.amount');
 var moneyLeft = document.querySelector('.money-left');
 var totalExpenses = document.querySelector('.total-expenses');
 var shoppingList = document.querySelectorAll('.list');
-var inputsOfPrizes = monthlyColumns.querySelectorAll("[name='sum']");
-var inputsOfItems = document.querySelectorAll("input[data-item='item']"); // amount that I get every new month + the leftover from the previous month
+var inputsOfItems = document.querySelectorAll("input[data-item='item']");
+var forms = document.querySelectorAll('form');
+var columnAmount = monthlyColumns.querySelectorAll('.amount');
+var priceInputs = monthlyColumns.querySelectorAll("[name='sum']");
+var FOOD = 'food';
+var COFFEE_AND_OUT = 'coffee_and_out';
+var TRAVEL = 'travel';
+var SHOPPING = 'shopping';
+var OTHER = 'other'; // const MONTHS = {
+//   may: {},
+// }
+// save('may', user) {
+//     MONTHS['may'] = user
+// }
 
-var incomeAmount = 0; // sum for each column
-
-var sumOfEveryColumn = {
-  first: 0,
-  second: 0,
-  third: 0,
-  fourth: 0,
-  fifth: 0
-}; // the list of item written down for each column
-
-var itemsOfEveryColumn = {
-  first: [],
-  second: [],
-  third: [],
-  fourth: [],
-  fifth: []
-}; // add and show monthly income + the leftover from the previous month
+var user = {
+  income: 0,
+  items: (_items = {}, _defineProperty(_items, FOOD, {
+    list: []
+  }), _defineProperty(_items, COFFEE_AND_OUT, {
+    list: []
+  }), _defineProperty(_items, TRAVEL, {
+    list: []
+  }), _defineProperty(_items, SHOPPING, {
+    list: []
+  }), _defineProperty(_items, OTHER, {
+    list: []
+  }), _items)
+};
+var columnsTotal = (_columnsTotal = {}, _defineProperty(_columnsTotal, FOOD, 0), _defineProperty(_columnsTotal, COFFEE_AND_OUT, 0), _defineProperty(_columnsTotal, TRAVEL, 0), _defineProperty(_columnsTotal, SHOPPING, 0), _defineProperty(_columnsTotal, OTHER, 0), _columnsTotal);
 
 function salaryAmount(e) {
-  incomeAmount += parseFloat(e.currentTarget.value);
-  if (!incomeAmount > 0) return;
-  incomeAmountNumber.textContent = incomeAmount.toFixed(2);
-  e.currentTarget.value = "";
-  localStorage.setItem('Income', JSON.stringify(incomeAmount));
-  sumAllColumns(sumOfEveryColumn);
-} // get the sum that was written down in the column
-
+  user.income += +e.currentTarget.value;
+  incomeAmountNumber.textContent = user.income.toFixed(2);
+  e.currentTarget.value = '';
+  localStorage.setItem('Income', JSON.stringify(user.income));
+  sumAllColumns(columnsTotal);
+}
 
 function valueOfItemPrice(e) {
-  // find active the input by data-name
-  var sameAttr = e.currentTarget.dataset.name; // get the value from this input
+  e.preventDefault();
+  var el = e.currentTarget.querySelector('[name="sum"]');
+  var attr = el.dataset.name;
+  var price = +el.value;
+  var name = document.getElementById("".concat(attr)).value;
+  var paragraph = document.querySelector("[data-name=".concat(attr, "]"));
 
-  var priceOfItem = parseFloat(e.currentTarget.value); // loop over each column and check if data-name for the active
-  // input is the same as p for this column,
-  // then display new amount in p and sum it all up
+  if (price > 0) {
+    columnsTotal[attr] += price;
+    paragraph.textContent = columnsTotal[attr].toFixed(2);
+    addItemToList(price, name, attr);
+    displayTheList(user.items);
+    sumAllColumns(columnsTotal);
+  }
 
-  columnAmount.forEach(function (p) {
-    if (p.getAttribute("data-name") === sameAttr) {
-      // we take data-name and use it as objetct[key] to find correct column
-      sumOfEveryColumn[sameAttr] += priceOfItem;
-      p.textContent = sumOfEveryColumn[sameAttr].toFixed(2);
-    }
-  });
-  e.target.value = "";
-  addItemToList(priceOfItem, sameAttr);
-  displayTheList(itemsOfEveryColumn);
-  sumAllColumns(sumOfEveryColumn);
-} // loop over each column and take total amount , then sum them all up
-
+  this.reset();
+}
 
 function sumAllColumns(objectOfSum) {
-  // make temporare arr and loop over all columns and push values to arr
-  var arrOfSumAllColumns = []; // loop over each key of Object to get value
-
-  for (var _i = 0, _Object$entries = Object.entries(objectOfSum); _i < _Object$entries.length; _i++) {
-    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
-        _key = _Object$entries$_i[0],
-        _value = _Object$entries$_i[1];
-
-    arrOfSumAllColumns.push(_value);
-  } // take only last 5 added values from the arr and sum it all
-
-
-  var sumOfAllColumns = arrOfSumAllColumns.splice(arrOfSumAllColumns.length - 5).reduce(function (prev, cur) {
-    return prev + cur;
-  });
-  countMoneyLeft(moneyLeft, incomeAmount, sumOfAllColumns); // moneyLeft.textContent = (incomeAmount - sumOfAllColumns).toFixed(2);
-  // totalExpenses.textContent = sumOfAllColumns.toFixed(2);
+  var total = Object.values(objectOfSum).reduce(function (acc, cur) {
+    return acc + cur;
+  }, 0);
+  countMoneyLeft(user.income, total);
 }
 
-function countMoneyLeft(moneyAll, income, allExpences) {
-  moneyAll.textContent = (income - allExpences).toFixed(2);
+function countMoneyLeft(income, allExpences) {
+  moneyLeft.textContent = (income - allExpences).toFixed(2);
   totalExpenses.textContent = allExpences.toFixed(2);
-} // add items from input to the list for each column separately 
-
-
-function addItemToList(inputValue, number) {
-  for (var _i2 = 0, _Object$entries2 = Object.entries(itemsOfEveryColumn); _i2 < _Object$entries2.length; _i2++) {
-    var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2);
-
-    key = _Object$entries2$_i[0];
-    value = _Object$entries2$_i[1];
-
-    if (key === number && inputValue > 0) {
-      value.push(inputValue);
-      addToLocalStorage(itemsOfEveryColumn);
-    }
-  }
-} // display the list all items for each column
-
-
-function displayTheList(objectOfColumns) {
-  for (var _i3 = 0, _Object$entries3 = Object.entries(objectOfColumns); _i3 < _Object$entries3.length; _i3++) {
-    var _Object$entries3$_i = _slicedToArray(_Object$entries3[_i3], 2);
-
-    key = _Object$entries3$_i[0];
-    value = _Object$entries3$_i[1];
-
-    if (value.length > 0) {
-      (function () {
-        var html = value.map(function (item, id) {
-          return "\n            <li class=\"item shopping-item\">\n                <span data-delete=\"".concat(id, "\" data-value=").concat(item, " class='delete'>x</span>\n                <span>").concat(item, "</span>\n            </li>  \n            ");
-        }).join('');
-        shoppingList.forEach(function (list) {
-          if (list.dataset.name === key) {
-            list.classList.add('open');
-            list.innerHTML = html;
-          }
-        });
-      })();
-    } else {
-      shoppingList.forEach(function (list) {
-        if (list.dataset.name === key) {
-          list.classList.remove('open');
-          list.innerHTML = " ";
-        }
-      });
-    }
-  }
-} // click x to delete item from list and from Object Array
-// Arguments: id - x[id] , list is current list of column , and then our Object
-
-
-function deleteItem(deletedValue, id, list, objectOfColumns) {
-  var newArr;
-
-  for (var _i4 = 0, _Object$entries4 = Object.entries(objectOfColumns); _i4 < _Object$entries4.length; _i4++) {
-    var _Object$entries4$_i = _slicedToArray(_Object$entries4[_i4], 2),
-        _key2 = _Object$entries4$_i[0],
-        _value2 = _Object$entries4$_i[1];
-
-    if (_key2 === list.dataset.name) {
-      newArr = _value2.filter(function (item, i) {
-        return i !== id;
-      });
-      _value2 = newArr;
-    }
-
-    objectOfColumns[_key2] = _value2;
-  }
-
-  updateAmount(list, deletedValue);
-  displayTheList(itemsOfEveryColumn);
-  addToLocalStorage(objectOfColumns);
-} // update all numbers after deleting items in columns
-
-
-function updateAmount(numberOfList, deletedValue) {
-  columnAmount.forEach(function (p) {
-    var columnNumber = numberOfList.dataset.name;
-
-    if (p.dataset.name === columnNumber) {
-      // we take data-name and use it as objetct[key] to find correct column
-      sumOfEveryColumn[columnNumber] -= deletedValue;
-      p.textContent = sumOfEveryColumn[columnNumber].toFixed(2);
-    }
-
-    sumAllColumns(sumOfEveryColumn);
-  });
-} // set Local Storage
-
-
-function addToLocalStorage(objectOfColumns) {
-  for (var _i5 = 0, _Object$entries5 = Object.entries(objectOfColumns); _i5 < _Object$entries5.length; _i5++) {
-    var _Object$entries5$_i = _slicedToArray(_Object$entries5[_i5], 2),
-        _key3 = _Object$entries5$_i[0],
-        _value3 = _Object$entries5$_i[1];
-
-    localStorage.setItem("column - ".concat(_key3), JSON.stringify(objectOfColumns[_key3]));
-  }
 }
 
-function restoreFromLocalStorage(objectOfColumns) {
-  var _loop = function _loop() {
-    var _Object$entries6$_i = _slicedToArray(_Object$entries6[_i6], 2),
-        key = _Object$entries6$_i[0],
-        value = _Object$entries6$_i[1];
+function addItemToList(price, name, attribute) {
+  var key = Object.keys(user.items).filter(function (key) {
+    return key === attribute;
+  });
+  user.items[key].list.push({
+    price: price,
+    name: name
+  });
+  addToLocalStorage(user.items);
+}
+
+function displayTheList(columns) {
+  Object.entries(columns).forEach(function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+        key = _ref2[0],
+        valuesList = _ref2[1].list;
+
+    var list = document.querySelector("ul[data-name=".concat(key, "]"));
+
+    if (valuesList.length) {
+      var html = valuesList.map(generateListHTML).join('');
+      list.classList.add('open');
+      list.innerHTML = html;
+    } else {
+      list.classList.remove('open');
+      list.innerHTML = "";
+    }
+  });
+}
+
+function generateListHTML(_ref3, id) {
+  var name = _ref3.name,
+      price = _ref3.price;
+  return "\n    <li class=\"item shopping-item\">\n        <span data-delete=\"".concat(id, "\" data-value=").concat(price, " class='delete'>x</span>\n        <span>").concat(name, "</span>\n        <span>").concat(price, "</span>\n    </li>  \n    ");
+}
+
+function deleteItem(deletedValue, id, list) {
+  var key = Object.keys(user.items).filter(function (key) {
+    return key === list.dataset.name;
+  });
+  var newValue = user.items[key].list.filter(function (_, i) {
+    return i !== parseFloat(id);
+  });
+  user.items[key].list = newValue;
+  updateAmount(list, deletedValue);
+  displayTheList(user.items);
+  addToLocalStorage(user.items);
+}
+
+function updateAmount(list, deletedValue) {
+  var name = list.dataset.name;
+  var paragraph = document.querySelector("[data-name=".concat(name));
+  columnsTotal[name] -= deletedValue;
+  paragraph.textContent = columnsTotal[name].toFixed(2);
+  sumAllColumns(columnsTotal);
+}
+
+function addToLocalStorage(columns) {
+  Object.entries(columns).forEach(function (_ref4) {
+    var _ref5 = _slicedToArray(_ref4, 1),
+        key = _ref5[0];
+
+    return localStorage.setItem("column - ".concat(key), JSON.stringify(columns[key].list));
+  });
+}
+
+function restoreFromLocalStorage(columns) {
+  Object.entries(columns).forEach(function (_ref6) {
+    var _ref7 = _slicedToArray(_ref6, 2),
+        key = _ref7[0],
+        values = _ref7[1];
 
     if (key) {
-      var listItems = JSON.parse(localStorage.getItem("column - ".concat(key))) || [];
+      var _columns$key$list;
 
-      if (listItems.length > 0) {
-        var _objectOfColumns$key;
+      var items = JSON.parse(localStorage.getItem("column - ".concat(key))) || [];
 
-        (_objectOfColumns$key = objectOfColumns[key]).push.apply(_objectOfColumns$key, _toConsumableArray(listItems));
+      (_columns$key$list = columns[key].list).push.apply(_columns$key$list, _toConsumableArray(items));
 
-        displayTheList(itemsOfEveryColumn);
-      }
+      displayTheList(columns);
     }
 
-    columnAmount.forEach(function (p) {
-      if (p.dataset.name === key && value.length > 0) {
-        // we take data-name and use it as objetct[key] to find correct column
-        var amountToDisplay = [];
-        value.forEach(function (item) {
-          return amountToDisplay.push(item);
-        });
-        var x = amountToDisplay.reduce(function (prev, next) {
-          return prev + next;
-        });
-        sumOfEveryColumn[key] += x;
-        p.textContent = sumOfEveryColumn[key].toFixed(2);
-      }
-    });
-  };
-
-  //pull the items from local storage
-  for (var _i6 = 0, _Object$entries6 = Object.entries(objectOfColumns); _i6 < _Object$entries6.length; _i6++) {
-    _loop();
-  }
-
-  var incomeStorage = JSON.parse(localStorage.getItem('Income')) || 0;
-  incomeAmountNumber.textContent = incomeStorage;
-  incomeAmount = incomeStorage;
-  var arrOfSumAllColumns = []; // loop over each key of Object to get value
-
-  for (var _i7 = 0, _Object$entries7 = Object.entries(sumOfEveryColumn); _i7 < _Object$entries7.length; _i7++) {
-    var _Object$entries7$_i = _slicedToArray(_Object$entries7[_i7], 2),
-        _key4 = _Object$entries7$_i[0],
-        _value4 = _Object$entries7$_i[1];
-
-    arrOfSumAllColumns.push(_value4);
-  } // take only last 5 added values from the arr and sum it all
-
-
-  var sumOfAllColumns = arrOfSumAllColumns.splice(arrOfSumAllColumns.length - 5).reduce(function (prev, cur) {
-    return prev + cur;
+    var paragraph = document.querySelector("[data-name=".concat(key, "]"));
+    var sum = values.list.reduce(function (acc, curr) {
+      return acc + curr.price;
+    }, 0);
+    columnsTotal[key] += sum;
+    paragraph.textContent = columnsTotal[key].toFixed(2);
   });
-  countMoneyLeft(moneyLeft, incomeAmount, sumOfAllColumns); //countMoneyLeft(moneyLeft, incomeAmount, sumOfAllColumns)
+  user.income = JSON.parse(localStorage.getItem('Income')) || 0;
+  incomeAmountNumber.textContent = user.income.toFixed(2);
+  sumAllColumns(columnsTotal);
 }
 
-inputsOfPrizes.forEach(function (input) {
-  return input.addEventListener('change', valueOfItemPrice);
+forms.forEach(function (form) {
+  return form.addEventListener('submit', valueOfItemPrice);
 });
 incomeInput.addEventListener('change', salaryAmount);
 shoppingList.forEach(function (list) {
   list.addEventListener('click', function (e) {
-    var btn = parseInt(e.target.dataset.delete);
+    var id = e.target.dataset.delete;
     var chosenValue = parseFloat(e.target.dataset.value);
 
-    if (btn || btn === 0) {
-      deleteItem(chosenValue, btn, list, itemsOfEveryColumn);
+    if (id) {
+      deleteItem(chosenValue, id, list);
     }
   });
 });
-restoreFromLocalStorage(itemsOfEveryColumn);
-displayTheList(itemsOfEveryColumn);
-},{}],"../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+restoreFromLocalStorage(user.items);
+displayTheList(user.items);
+},{}],"../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -424,7 +357,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "4233" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53689" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -600,5 +533,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","script.js"], null)
+},{}]},{},["../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","script.js"], null)
 //# sourceMappingURL=/script.75da7f30.js.map
