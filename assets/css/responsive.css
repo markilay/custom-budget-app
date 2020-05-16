@@ -1,10 +1,6 @@
 @media screen and (max-width: 415px) {
     h3 {
-<<<<<<< HEAD
         margin-bottom: 0.5rem;
-=======
-        margin-bottom: 0.5rem
->>>>>>> 0a7f276cd0035cd67bc64d3dbf1a3a92d1ab86e0
     }
 
     .history {
@@ -36,11 +32,7 @@
     }
 
     .subheader_two input[name='notes'] {
-<<<<<<< HEAD
 
-=======
-        display: block;
->>>>>>> 0a7f276cd0035cd67bc64d3dbf1a3a92d1ab86e0
         margin: 0 auto;
     }
 
@@ -54,24 +46,7 @@
     }
 
     .mobile_closedNotes {
-<<<<<<< HEAD
         display: none;
-    }
-
-    .monthlyColumns {
-	    width: 200px;
-	    display: flex;
-	    justify-content: flex-start;
-	    overflow-x: scroll;
-	    padding: 30px 20px 30px 45px;
-    }
-
-=======
-        opacity: 0;
-    }
-
-    .mobile_monthlyColumns-transform {
-        transform: translateY(-120px);
     }
 
     .monthlyColumns {
@@ -82,21 +57,12 @@
         padding: 30px 20px 30px 50px;
     }
 
-
->>>>>>> 0a7f276cd0035cd67bc64d3dbf1a3a92d1ab86e0
     .columns {
         margin-right: 10px;
         position: relative;
         z-index: 1;
     }
 
-<<<<<<< HEAD
-    .shopping-item {
-    	font-size: 0.8rem;
-    }
-
-=======
->>>>>>> 0a7f276cd0035cd67bc64d3dbf1a3a92d1ab86e0
     .sum-section {
         margin: 0 auto;
     }
