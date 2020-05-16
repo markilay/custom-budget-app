@@ -1,0 +1,40 @@
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('./font/Ubuntu-Regular.ttf') format('truetype'),
+        url('./font/Ubuntu-Regular.woff2') format('woff2'),
+        url('./font/Ubuntu-Regular.woff') format('woff');
+
+    font-display: block;
+}
+
+:root {
+    --main-bg-color: rgba(236, 233, 229, 0.973);
+    --main-border-color: cornflowerblue;
+    --main-transition: all 0.2s;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    background: var(--main-bg-color);
+    font-weight: bold;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 16px;
+    transition: all 0.5s;
+}
+
+p,
+ul,
+li,
+h1,
+h2,
+h3 {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
