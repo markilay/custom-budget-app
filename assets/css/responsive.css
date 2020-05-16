@@ -50,17 +50,21 @@
     }
 
     .monthlyColumns {
-        width: 250px;
+        width: 200px;
         display: flex;
         justify-content: flex-start;
         overflow-x: scroll;
-        padding: 30px 20px 30px 50px;
+        padding: 30px 20px 30px 45px;
     }
 
     .columns {
         margin-right: 10px;
         position: relative;
         z-index: 1;
+    }
+
+    .shopping-item {
+    	font-size: 0.8rem;
     }
 
     .sum-section {
