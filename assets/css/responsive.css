@@ -71,7 +71,8 @@
 
     .monthlyColumns input {
         margin-top: 15px;
-        width: 50%;
+        margin-right: 10px;
+        width: 30%;
     }
 
     .columns {
