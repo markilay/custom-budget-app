@@ -1,4 +1,13 @@
 @media screen and (max-width: 415px) {
+
+    body {
+        font-size: 15px !important;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
     h3 {
         margin-bottom: 0.5rem;
     }
@@ -12,7 +21,6 @@
         text-decoration: none;
         color: var(--main-bg-color);
         background: black;
-        font-size: 0.8rem;
         font-weight: normal;
     }
 
@@ -20,6 +28,7 @@
         grid-template-columns: 250px;
         text-align: center;
         justify-content: center;
+        padding: 0;
     }
 
     .under-income_sign {
@@ -32,7 +41,6 @@
     }
 
     .subheader_two input[name='notes'] {
-
         margin: 0 auto;
     }
 
@@ -54,37 +62,33 @@
         display: flex;
         justify-content: flex-start;
         overflow-x: scroll;
-        padding: 30px 20px 30px 45px;
+        padding: 30px 20px 30px 15px;
+    }
+
+    .amount {
+        font-size: 0.8rem;
+    }
+
+    .monthlyColumns input {
+        margin-top: 5px;
+        margin-right: 20px;
     }
 
     .columns {
         margin-right: 10px;
-        position: relative;
-        z-index: 1;
+    }
+
+    .columns:hover {
+        box-shadow: none;
+        transform: none;
     }
 
     .shopping-item {
-    	font-size: 0.8rem;
+        font-size: 0.8rem;
     }
 
     .sum-section {
         margin: 0 auto;
     }
 
-    .block {
-        position: fixed;
-        width: 100px;
-        height: 380px;
-        /* border: 2px solid black; */
-        background: rgba(236, 233, 229, 0.973);
-        opacity: 0.8;
-        left: 77%;
-        top: 36%;
-        border-radius: 20px;
-        z-index: 10;
-    }
-
-    #block_one {
-        left: -5%;
-    }
 }
