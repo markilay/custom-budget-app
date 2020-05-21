@@ -62,7 +62,7 @@
         display: flex;
         justify-content: flex-start;
         overflow-x: scroll;
-        padding: 30px 20px 30px 15px;
+        padding: 30px 20px 30px 25px;
     }
 
     .amount {
@@ -81,6 +81,10 @@
     .columns:hover {
         box-shadow: none;
         transform: none;
+    }
+
+    .column_title {
+        font-size: 0.9rem;
     }
 
     .shopping-item {
