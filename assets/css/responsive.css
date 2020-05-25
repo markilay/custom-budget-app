@@ -55,7 +55,6 @@
         top: 3px;
     }
 
-
     .mobile_closedNotes {
         display: none;
     }
@@ -91,6 +90,10 @@
 
     .shopping-item {
         font-size: 0.8rem;
+    }
+
+    form button {
+        font-size: 1rem;
     }
 
     .sum-section {
