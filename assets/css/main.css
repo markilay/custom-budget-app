@@ -119,15 +119,17 @@ input {
 }
 
 .open::-webkit-scrollbar {
-  background: rgb(236, 217, 217);
+  background: rgb(236, 217, 217) !important;
   border-radius: 4px;
   height: 8px;
   width: 8px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .open::-webkit-scrollbar-thumb {
-  background: rgb(158, 158, 158);
+  background: rgb(158, 158, 158) !important;
   border-radius: 4px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .shopping-item {
