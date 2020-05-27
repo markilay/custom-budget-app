@@ -11,6 +11,7 @@ input {
   max-width: 50%;
 }
 
+
 .grid-header {
   display: grid;
   grid-template-columns: 200px 500px;

@@ -16,14 +16,7 @@ const priceInputs = monthlyColumns.querySelectorAll("[name='sum']")
 //mobile version
 const notesButton = document.querySelector('h3 .icon_sign')
 
-function openNotes() {
-  monthlyColumns.classList.toggle('mobile_monthlyColumns-transform')
-  totalSumSection.classList.toggle('mobile_monthlyColumns-transform')
-  notesInput.classList.toggle('mobile_closedNotes')
-  notebook.classList.toggle('mobile_closedNotes')
-}
 
-notesButton.addEventListener('click', openNotes)
 
 const FOOD = 'food'
 const COFFEE_AND_OUT = 'coffee_and_out'
@@ -161,7 +154,7 @@ function updateAmount(list, deletedValue) {
   const {
     name
   } = list.dataset
-  const paragraph = document.querySelector(`[data-name=${name}`)
+  const paragraph = document.querySelector(`[data-name=${name}]`)
 
   columnsTotal[name] -= deletedValue
   paragraph.textContent = columnsTotal[name].toFixed(2)
@@ -172,6 +165,7 @@ function updateAmount(list, deletedValue) {
 function addToLocalStorage(columns) {
   Object.entries(columns).forEach(([key]) =>
     localStorage.setItem(`column - ${key}`, JSON.stringify(columns[key].list))
+
   )
 }
 
@@ -192,7 +186,7 @@ function restoreFromLocalStorage(columns) {
   })
 
   user.income = JSON.parse(localStorage.getItem('Income')) || 0
-  incomeAmountNumber.textContent = user.income.toFixed(2)
+  incomeAmountNumber.textContent = parseFloat(user.income).toFixed(2)
 
   user.notes = JSON.parse(localStorage.getItem('Notebook')) || []
   displayNotes()
@@ -231,6 +225,15 @@ function deleteNote(id) {
 
   displayNotes()
 }
+
+function openNotes() {
+  monthlyColumns.classList.toggle('mobile_monthlyColumns-transform')
+  totalSumSection.classList.toggle('mobile_monthlyColumns-transform')
+  notesInput.classList.toggle('mobile_closedNotes')
+  notebook.classList.toggle('mobile_closedNotes')
+}
+
+notesButton.addEventListener('click', openNotes)
 
 forms.forEach((form) => form.addEventListener('submit', valueOfItemPrice))
 
