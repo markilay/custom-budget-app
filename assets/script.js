@@ -1,3 +1,7 @@
+import * as firebase from "firebase/app";
+import 'firebase/database';
+
+
 const monthlyColumns = document.querySelector('.monthlyColumns')
 const incomeInput = document.querySelector('[name="income"]')
 const notesInput = document.querySelector('[name="notes"]')
@@ -15,6 +19,26 @@ const priceInputs = monthlyColumns.querySelectorAll("[name='sum']")
 
 //mobile version
 const notesButton = document.querySelector('h3 .icon_sign')
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyC4RblFpi7o9ujSicSbaCQVaN_wn2Y1s1E",
+    authDomain: "monthly-budget-e3cec.firebaseapp.com",
+    databaseURL: "https://monthly-budget-e3cec.firebaseio.com",
+    projectId: "monthly-budget-e3cec",
+    storageBucket: "monthly-budget-e3cec.appspot.com",
+    messagingSenderId: "479148764707",
+    appId: "1:479148764707:web:92bc7df0d5646119d84b96"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+
+firebase.database().ref('user').once('value', function(snapshot){
+  snapshot.forEach(child => {
+    console.log(child.val())
+  })
+})
 
 function openNotes() {
   monthlyColumns.classList.toggle('mobile_monthlyColumns-transform')
@@ -67,7 +91,8 @@ function salaryAmount(e) {
   incomeAmountNumber.textContent = user.income.toFixed(2)
   e.currentTarget.value = ''
 
-  localStorage.setItem('Income', JSON.stringify(user.income))
+  //localStorage.setItem('Income', JSON.stringify(user.income))
+  firebase.database().ref().child('user').update({'income': user.income})
   sumAllColumns(columnsTotal)
 }
 
@@ -161,7 +186,7 @@ function updateAmount(list, deletedValue) {
   const {
     name
   } = list.dataset
-  const paragraph = document.querySelector(`[data-name=${name}`)
+  const paragraph = document.querySelector(`[data-name=${name}]`)
 
   columnsTotal[name] -= deletedValue
   paragraph.textContent = columnsTotal[name].toFixed(2)
@@ -172,6 +197,7 @@ function updateAmount(list, deletedValue) {
 function addToLocalStorage(columns) {
   Object.entries(columns).forEach(([key]) =>
     localStorage.setItem(`column - ${key}`, JSON.stringify(columns[key].list))
+
   )
 }
 
@@ -191,8 +217,13 @@ function restoreFromLocalStorage(columns) {
     paragraph.textContent = columnsTotal[key].toFixed(2)
   })
 
-  user.income = JSON.parse(localStorage.getItem('Income')) || 0
-  incomeAmountNumber.textContent = user.income.toFixed(2)
+  //user.income = JSON.parse(localStorage.getItem('Income')) || 0
+  firebase.database().ref('user').once('value', function(snapshot){
+  snapshot.forEach(child => {
+     user.income = child.val();
+    incomeAmountNumber.textContent = parseFloat(user.income).toFixed(2)
+   })
+  })
 
   user.notes = JSON.parse(localStorage.getItem('Notebook')) || []
   displayNotes()

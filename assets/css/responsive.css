@@ -16,18 +16,6 @@
         margin-bottom: 0.5rem;
     }
 
-    .history {
-        border: 1px solid black;
-        border-radius: 10px;
-        width: fit-content;
-        margin: 10px auto;
-        padding: 5px;
-        text-decoration: none;
-        color: var(--main-bg-color);
-        background: black;
-        font-weight: normal;
-    }
-
     .grid-header {
         grid-template-columns: 250px;
         text-align: center;
