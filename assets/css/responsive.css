@@ -99,3 +99,7 @@
     }
 
 }
+
+.history li:nth-child(odd) {
+    background: #efefef !important;
+}

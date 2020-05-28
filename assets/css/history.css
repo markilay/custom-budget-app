@@ -22,7 +22,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.14);
     padding: 20px;
     text-align: center;
-    transition: all 0.1s;
+    transition: all 0.3s;
 }
 
 .history li:nth-child(even) {
