@@ -33,6 +33,8 @@
 .history li:nth-child(even):hover {
     border: 2px solid rgb(121, 120, 120);
     transform: perspective(100px) rotateX(0deg) translateY(0px) scale(1.001);
+    background: linear-gradient(to top, #ffffff 0%, #efefef 100%);
+
 }
 
 .history li:nth-child(odd) {
@@ -43,6 +45,8 @@
 .history li:nth-child(odd):hover {
     border: 2px solid rgb(121, 120, 120);
     transform: perspective(100px) rotateX(0deg) translateY(0px);
+    background: linear-gradient(to top, #ffffff 0%, #efefef 100%);
+
 }
 
 .modal-outer {
