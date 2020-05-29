@@ -48,7 +48,6 @@ function showMonthAnalysis(item) {
 function restoreFromLocalStorage() {
     savedMonth = JSON.parse(localStorage.getItem('history')) || []
     history.innerHTML = savedMonth.map(generateMonthsHTML).join("")
-
 }
 
 function closeModalWindow(e) {

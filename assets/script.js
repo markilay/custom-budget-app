@@ -9,13 +9,10 @@ const shoppingList = document.querySelectorAll('.list')
 const inputsOfItems = document.querySelectorAll("input[data-item='item']")
 const forms = document.querySelectorAll('form')
 const totalSumSection = document.querySelector('.sum-section')
+const notesButton = document.querySelector('h3 .icon_sign')
 
 const columnAmount = monthlyColumns.querySelectorAll('.amount')
 const priceInputs = monthlyColumns.querySelectorAll("[name='sum']")
-
-//mobile version
-const notesButton = document.querySelector('h3 .icon_sign')
-
 
 
 const FOOD = 'food'
@@ -45,6 +42,7 @@ const user = {
     },
   },
 }
+
 
 let columnsTotal = {
   [FOOD]: 0,
