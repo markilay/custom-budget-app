@@ -1,5 +1,4 @@
 @media screen and (max-width: 415px) {
-
     :root {
         --main-font-size: 15px;
     }
@@ -97,9 +96,8 @@
     .sum-section {
         margin: 0 auto;
     }
-
 }
 
-.history li:nth-child(odd) {
-    background: #efefef !important;
+.modal-outer.open .history li {
+    pointer-events: none;
 }
