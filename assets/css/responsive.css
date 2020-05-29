@@ -97,13 +97,3 @@
         margin: 0 auto;
     }
 }
-
-/* /* .history li:nth-child(even):hover {
-    transform: none;
-    background: none;
-} */
-
-.history li:nth-child(odd):hover {
-    transform: perspective(100px) rotateX(-3deg) translateY(3px);
-    background: linear-gradient(to top, #ffffff 0%, #efefef 100%);
-}
