@@ -98,13 +98,12 @@
     }
 }
 
-.history li:nth-child(even):hover {
+/* /* .history li:nth-child(even):hover {
     transform: none;
     background: none;
-}
+} */
 
 .history li:nth-child(odd):hover {
-    transform: none !important;
-    -webkit-transform: none !important;
-    background: none !important;
+    transform: perspective(100px) rotateX(-3deg) translateY(3px);
+    background: linear-gradient(to top, #ffffff 0%, #efefef 100%);
 }
