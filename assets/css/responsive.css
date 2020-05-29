@@ -98,6 +98,12 @@
     }
 }
 
-.modal-outer.open .history li {
-    pointer-events: none;
+.history li:nth-child(even):hover {
+    transform: none;
+    background: none;
+}
+
+.history li:nth-child(odd):hover {
+    transform: none;
+    background: none;
 }
