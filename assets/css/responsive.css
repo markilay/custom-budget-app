@@ -105,5 +105,12 @@
 
 .history li:nth-child(odd):hover {
     transform: none;
+    -webkit-transform: none;
+    background: none;
+}
+
+.history li:nth-child(odd):click {
+    transform: none;
+    -webkit-transform: none;
     background: none;
 }
