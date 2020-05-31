@@ -45,7 +45,7 @@
 .history li:nth-child(odd):hover {
     border: 2px solid rgb(121, 120, 120);
     transform: perspective(100px) rotateX(0deg) translateY(0px);
-    background: linear-gradient(to top, #efefef 100%, #efefef 100%);
+    background: linear-gradient(to bottom, #ffffff 0%, #efefef 100%);
 
 }
 
@@ -82,6 +82,8 @@
     font-weight: normal;
     transform: translateY(-1000px);
     transition: all 0.5s;
+    display: grid;
+    align-items: center;
 }
 
 .modal-inner.open {

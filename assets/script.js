@@ -9,10 +9,10 @@ const shoppingList = document.querySelectorAll('.list')
 const inputsOfItems = document.querySelectorAll("input[data-item='item']")
 const forms = document.querySelectorAll('form')
 const totalSumSection = document.querySelector('.sum-section')
-const notesButton = document.querySelector('h3 .icon_sign')
+const notesButton = document.querySelector('.subheader_two h3')
 
-const columnAmount = monthlyColumns.querySelectorAll('.amount')
-const priceInputs = monthlyColumns.querySelectorAll("[name='sum']")
+const columnAmount = document.querySelectorAll('.amount')
+const priceInputs = document.querySelectorAll("[name='sum']")
 
 
 const FOOD = 'food'
@@ -92,7 +92,10 @@ function sumAllColumns(objectOfSum) {
 
 function countMoneyLeft(income, allExpences) {
   moneyLeft.textContent = (income - allExpences).toFixed(2)
+  localStorage.setItem('Balance', (income - allExpences).toFixed(2))
+
   totalExpenses.textContent = allExpences.toFixed(2)
+  localStorage.setItem('Total', JSON.stringify(allExpences))
 }
 
 function addItemToList(price, name, attribute) {
@@ -218,7 +221,6 @@ function displayNotes() {
 function deleteNote(id) {
   //update our notes array deleting one
   user.notes = user.notes.filter((_, i) => i !== id)
-
   localStorage.setItem('Notebook', JSON.stringify(user.notes))
 
   displayNotes()

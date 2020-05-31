@@ -27,6 +27,10 @@ input {
   transition: all 0.5s;
 }
 
+.subheader_two h3 {
+  cursor: pointer;
+}
+
 .icon_sign {
   display: none;
 }
@@ -106,7 +110,7 @@ input {
   border-radius: 5px;
   padding: 5px;
   color: white;
-  width: 60px;
+  width: 65px;
   text-align: center;
 }
 
@@ -155,7 +159,6 @@ input {
   border: 2px var(--main-border-color) solid;
   border-radius: 10px;
   width: 200px;
-  transition: var(--main-border-color);
 }
 
 .sum-section span {
