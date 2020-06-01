@@ -49,7 +49,7 @@
 
 }
 
-.modal-outer {
+.modal-outer, .validation {
     display: grid;
     justify-content: center;
     align-content: center;
@@ -64,7 +64,7 @@
     transition: all 0.5s;
 }
 
-.modal-outer.open {
+.modal-outer.open, .validation.open {
     opacity: 1;
     pointer-events: all;
 }
@@ -88,4 +88,49 @@
 
 .modal-inner.open {
     transform: translateY(0);
+}
+
+.validation-inner {
+    max-width: 300px;
+    min-width: 300px;
+    max-height: 300px;
+    min-height: 300px;
+    text-align: center;
+    font-weight: normal;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 1rem;
+    border-radius: 1.5rem;
+    transition: all 1s;
+    position: relative;
+}
+
+.validation-inner button {
+    background-color: rgb(219, 218, 218);
+    border-radius: 0.5rem;
+    color: #000;
+}
+
+.validation-inner_warning {
+    position: relative;
+    top: 40%;
+}
+
+.validation-inner_warning p {
+    margin-bottom: 1rem;
+}
+
+.validation-inner_warning.close {
+    opacity: 0;
+}
+
+.validation-inner_confirm {
+    transition: all 1s;
+    opacity: 0;
+    position: relative;
+    top: 15%;
+}
+
+.validation-inner_confirm.open {
+    opacity: 1;
 }

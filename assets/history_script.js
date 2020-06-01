@@ -7,9 +7,12 @@ const saveButton = document.querySelector('button')
 const history = document.querySelector('.history')
 const modalOuter = document.querySelector('.modal-outer')
 const modalInner = document.querySelector('.modal-inner')
+const validationModal = document.querySelector('.validation')
+const validationModalInner = document.querySelector('.validation-inner')
 
 const now = new Date();
-const month = months[now.getMonth()];
+const monthIndex = now.getMonth() -1;
+const month = months[monthIndex];
 const year = now.getFullYear();
 
 function addMonth() {
@@ -26,13 +29,14 @@ function addMonth() {
         balance: JSON.parse(localStorage.getItem('Balance'))
     } 
     savedMonth.push(item)
-    localStorage.setItem('history', JSON.stringify(savedMonth))
     history.innerHTML = savedMonth.map(generateMonthsHTML).join("")
+    localStorage.clear()
+    localStorage.setItem('history', JSON.stringify(savedMonth));
 }
 
 function getTotal(columnName) {
     const arr = JSON.parse(localStorage.getItem(`column - ${columnName}`))
-    return arr.reduce((prev, next) => (prev + next.price), 0)
+    return arr.reduce((prev, next) => (prev + next.price), 0).toFixed(2)
 }
 
 function generateMonthsHTML({
@@ -69,6 +73,11 @@ function closeModalWindow(e) {
     }
 }
 
+function closeValidationWindow(e) {
+    if (e.currentTarget === e.target) {
+        validationModal.classList.remove('open')
+    }
+}
 
 function restoreFromLocalStorage() {
     savedMonth = JSON.parse(localStorage.getItem('history')) || []
@@ -76,27 +85,32 @@ function restoreFromLocalStorage() {
 }
 
 function validation(){
-    if (savedMonth.length === 0 || !(savedMonth[month - 1] == savedMonth[month])) {
-        const question = prompt(`Are you ready to close month ${month} ${year}?`)
-        if(question === 'yes'){
-            alert(`The current month has been stored and added to the history. Your budget will be reset`)
-            addMonth()
-        } else {
-            'do not hurry up'
-        }
-    } else {
-        alert('Upps this month has already been saved')
-    }
+    const warningText = validationModalInner.querySelector('.validation-inner_warning p')
+    const confirm = validationModalInner.querySelector('.validation-inner_confirm')
+    const yesBtn = validationModalInner.querySelector('.yesBtn')
+    const noBtn = validationModalInner.querySelector('.noBtn')
+
+    warningText.textContent = `Are you ready to save month ${month} ${year} ? \n All data will be reset after you confirm`
+    validationModal.classList.add('open')
+    yesBtn.addEventListener('click', ()=> {
+        validationModalInner.querySelector('.validation-inner_warning').classList.add('close')
+        addMonth()
+        confirm.classList.add('open')
+        setTimeout(function() {validationModal.classList.remove('open')}, 2000)
+    })
+    noBtn.addEventListener('click', closeValidationWindow)
 }
 
 
-saveButton.addEventListener('click', validation)
+saveButton.addEventListener('click', ()=> {
+    savedMonth[savedMonth.length -1].month !== month || savedMonth.length === 0 ? validation() : alert('Oops this month has already been saved')
+})
 
 history.addEventListener('click', function (e) {
     savedMonth.forEach((month, id) => id == +e.target.id ? showMonthAnalysis(month) : console.log('wrong month'))
 })
 
 modalOuter.addEventListener('click', closeModalWindow)
-
+validationModal.addEventListener('click', closeValidationWindow)
 
 restoreFromLocalStorage()

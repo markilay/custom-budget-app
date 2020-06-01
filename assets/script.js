@@ -95,7 +95,7 @@ function countMoneyLeft(income, allExpences) {
   localStorage.setItem('Balance', (income - allExpences).toFixed(2))
 
   totalExpenses.textContent = allExpences.toFixed(2)
-  localStorage.setItem('Total', JSON.stringify(allExpences))
+  localStorage.setItem('Total', JSON.stringify(allExpences.toFixed(2)))
 }
 
 function addItemToList(price, name, attribute) {
