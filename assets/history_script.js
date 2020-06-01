@@ -64,10 +64,12 @@ function showMonthAnalysis(item) {
     `
     modalOuter.classList.add('open')
     modalInner.classList.add('open')
+    history.classList.add('visibility')
 }
 
 function closeModalWindow(e) {
     if (e.currentTarget === e.target) {
+        history.classList.remove('visibility')
         modalInner.classList.remove('open')
         modalOuter.classList.remove('open')
     }
@@ -75,6 +77,7 @@ function closeModalWindow(e) {
 
 function closeValidationWindow(e) {
     if (e.currentTarget === e.target) {
+        history.classList.remove('visibility')
         validationModal.classList.remove('open')
     }
 }
@@ -90,8 +93,9 @@ function validation(){
     const yesBtn = validationModalInner.querySelector('.yesBtn')
     const noBtn = validationModalInner.querySelector('.noBtn')
 
-    warningText.textContent = `Are you ready to save month ${month} ${year} ? \n All data will be reset after you confirm`
+    warningText.textContent = `Are you ready to save month ${month} ${year} ?   All data will be reset after you confirm`
     validationModal.classList.add('open')
+    history.classList.add('visibility')
     yesBtn.addEventListener('click', ()=> {
         validationModalInner.querySelector('.validation-inner_warning').classList.add('close')
         addMonth()

@@ -134,3 +134,7 @@
 .validation-inner_confirm.open {
     opacity: 1;
 }
+
+.visibility {
+    visibility: hidden;
+}
