@@ -98,11 +98,11 @@ function validation(){
     history.classList.add('visibility')
     yesBtn.addEventListener('click', ()=> {
         validationModalInner.querySelector('.validation-inner_warning').classList.add('close')
-        history.classList.remove('visibility')
         addMonth()
         confirm.classList.add('open')
         setTimeout(function() {
             validationModal.classList.remove('open')
+            history.classList.remove('visibility')
             confirm.classList.remove('open')
         }, 2000)
     })
