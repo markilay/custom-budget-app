@@ -103,7 +103,7 @@ function validation(){
 
 
 saveButton.addEventListener('click', ()=> {
-    savedMonth[savedMonth.length -1].month !== month || savedMonth.length === 0 ? validation() : alert('Oops this month has already been saved')
+    (savedMonth.length === 0) || (savedMonth[savedMonth.length -1].month !== month) ? validation() : alert('Oops this month has already been saved')
 })
 
 history.addEventListener('click', function (e) {
