@@ -133,7 +133,7 @@ function checkForMonth() {
 }
 
 saveButton.addEventListener('click', () =>
-  localStorage.length > 2
+  localStorage.length > 3
     ? checkForMonth()
     : alert("You don't have any data in your budget. You can't save this month")
 )
