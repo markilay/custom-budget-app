@@ -74,6 +74,16 @@ function showMonthAnalysis(item) {
   modalOuter.classList.add('open')
   modalInner.classList.add('open')
   history.classList.add('visibility')
+
+  modalInner
+    .querySelector('.close-button')
+    .addEventListener('click', (e) =>
+      removeClassesHandler(
+        e,
+        [history, modalInner, modalOuter],
+        ['visibility', 'open', 'open']
+      )
+    )
 }
 
 function removeClassesHandler(e, elements, classes) {
@@ -152,16 +162,6 @@ history.addEventListener('click', function (e) {
       )
     } else return window
   })
-
-  modalInner
-    .querySelector('.close-button')
-    .addEventListener('click', (e) =>
-      removeClassesHandler(
-        e,
-        [history, modalInner, modalOuter],
-        ['visibility', 'open', 'open']
-      )
-    )
 })
 
 modalOuter.addEventListener('click', (e) =>
