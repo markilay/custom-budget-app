@@ -39,6 +39,7 @@ body {
     padding: 5px 10px;
     font-weight: normal;
     text-decoration: none;
+    font-size: var(--main-font-size);
 }
 
 p,

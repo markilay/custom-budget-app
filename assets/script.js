@@ -14,7 +14,6 @@ const notesButton = document.querySelector('.subheader_two h3')
 const columnAmount = document.querySelectorAll('.amount')
 const priceInputs = document.querySelectorAll("[name='sum']")
 
-
 const FOOD = 'food'
 const COFFEE_AND_OUT = 'coffee_and_out'
 const TRAVEL = 'travel'
@@ -26,7 +25,7 @@ const user = {
   income: 0,
   items: {
     [FOOD]: {
-      list: []
+      list: [],
     },
     [COFFEE_AND_OUT]: {
       list: [],
@@ -42,7 +41,6 @@ const user = {
     },
   },
 }
-
 
 let columnsTotal = {
   [FOOD]: 0,
@@ -109,9 +107,7 @@ function addItemToList(price, name, attribute) {
 }
 
 function displayTheList(columns) {
-  Object.entries(columns).forEach(([key, {
-    list: valuesList
-  }]) => {
+  Object.entries(columns).forEach(([key, { list: valuesList }]) => {
     const list = document.querySelector(`ul[data-name=${key}]`)
 
     if (valuesList.length) {
@@ -127,10 +123,7 @@ function displayTheList(columns) {
   })
 }
 
-function generateListHTML({
-  name,
-  price
-}, id) {
+function generateListHTML({ name, price }, id) {
   return `
     <li class="item shopping-item">
         <span data-delete="${id}" data-value=${price} class='delete'>x</span>
@@ -152,9 +145,7 @@ function deleteItem(deletedValue, id, list) {
 }
 
 function updateAmount(list, deletedValue) {
-  const {
-    name
-  } = list.dataset
+  const { name } = list.dataset
   const paragraph = document.querySelector(`[data-name=${name}]`)
 
   columnsTotal[name] -= deletedValue
@@ -166,7 +157,6 @@ function updateAmount(list, deletedValue) {
 function addToLocalStorage(columns) {
   Object.entries(columns).forEach(([key]) =>
     localStorage.setItem(`column - ${key}`, JSON.stringify(columns[key].list))
-
   )
 }
 
@@ -198,8 +188,6 @@ function restoreFromLocalStorage(columns) {
 function addToNotebook(e) {
   const el = e.currentTarget.value
   user.notes.push(el)
-  // const html = user.notes.map(displayNotes).join('')
-  // notebook.innerHTML = html
   displayNotes()
   localStorage.setItem('Notebook', JSON.stringify(user.notes))
   e.currentTarget.value = ''
@@ -219,7 +207,6 @@ function displayNotes() {
 }
 
 function deleteNote(id) {
-  //update our notes array deleting one
   user.notes = user.notes.filter((_, i) => i !== id)
   localStorage.setItem('Notebook', JSON.stringify(user.notes))
 

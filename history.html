@@ -1,43 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/responsive.css" />
+    <link rel="stylesheet" href="./assets/css/history.css" />
+    <title>History</title>
+  </head>
 
-  <link rel="stylesheet" href="./assets/css/base.css" />
-  <link rel="stylesheet" href="./assets/css/responsive.css" />
-  <link rel="stylesheet" href="./assets/css/history.css" />
-  <title>History</title>
-</head>
-
-<body>
-  <div class="button_wrap">
-    <button class="main-button_style save_button">Save</button>
-    <a class="main-button_style" href="index.html">Back to budget</a>
-  </div>
-  <ul class="history">
-    <li>May</li>
-    <li>June</li>
-    <li>July</li>
-    <li>August</li>
-  </ul>
-  <div class="validation">
-    <div class="validation-inner">
-      <div class="validation-inner_warning">
-        <p>Warning !!!</p>
-        <button class="yesBtn main-button_style">YES</button>
-        <button class="noBtn main-button_style">NO</button>
+  <body>
+    <div class="button_wrap">
+      <button class="main-button_style save_button">Save</button>
+      <a class="main-button_style" href="index.html">Back to budget</a>
+    </div>
+    <ul class="history">
+      <li>May</li>
+      <li>June</li>
+      <li>July</li>
+      <li>August</li>
+    </ul>
+    <div class="validation">
+      <div class="validation-inner">
+        <div class="validation-inner_warning">
+          <p>Warning !!!</p>
+          <button class="yes_button main-button_style">YES</button>
+          <button class="no_button main-button_style">NO</button>
+        </div>
+        <p class="validation-inner_confirm">
+          The current month has been stored and added to the history. Your
+          budget will be reset
+        </p>
       </div>
-      <p class="validation-inner_confirm">The current month has been stored and added to the history. 
-        Your budget will be reset</p>
     </div>
-  </div>
-  <div class="modal-outer">
-    <div class="modal-inner">
+    <div class="modal-outer">
+      <div class="modal-inner"></div>
     </div>
-  </div>
-  <script src="./assets/history_script.js"></script>
-</body>
-
+    <script src="./assets/history_script.js"></script>
+  </body>
 </html>
