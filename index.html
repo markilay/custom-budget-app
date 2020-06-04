@@ -70,17 +70,21 @@
         <label>Sum</label>
         <p class="amount" data-name="food">0.00</p>
         <form>
-          <label>Name - </label>
-          <input required id="food" type="text" />
-          <label for="food">Price - </label>
-          <input
-            required
-            min="0"
-            step=".01"
-            type="number"
-            data-name="food"
-            name="sum"
-          />
+          <div>
+            <label>Name - </label>
+            <input required id="food" type="text" />
+          </div>
+          <div>
+            <label for="food">Price - </label>
+            <input
+              required
+              min="0"
+              step=".01"
+              type="number"
+              data-name="food"
+              name="sum"
+            />
+          </div>
           <button type="submit">Add</button>
         </form>
         <hr />
