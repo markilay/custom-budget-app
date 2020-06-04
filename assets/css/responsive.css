@@ -66,13 +66,13 @@
   .amount {
     font-size: 0.8rem;
     width: 60px;
+    margin-left: 35px;
   }
 
   .monthlyColumns input {
-    /* margin-top: 15px;
-    width: 30%; */
     margin: 0;
     width: 100%;
+    height: fit-content;
     background-color: rgb(224, 221, 221);
   }
 
@@ -97,6 +97,12 @@
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     margin-top: 0.5rem;
+  }
+
+  form div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
   }
 
   form button {

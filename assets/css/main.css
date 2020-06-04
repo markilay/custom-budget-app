@@ -111,6 +111,7 @@ input {
   color: white;
   width: 65px;
   text-align: center;
+  overflow-wrap: break-word;
 }
 
 .open {
@@ -143,6 +144,7 @@ input {
   border-bottom: 1px solid #9e9a9a;
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   font-size: 0.9rem;
 }
 
@@ -151,6 +153,7 @@ input {
   height: 10px;
   transition: var(--main-border-color);
   color: var(--main-border-color);
+  font-size: 1rem;
 }
 
 .sum-section {
