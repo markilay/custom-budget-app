@@ -82,6 +82,7 @@
   max-height: 500px;
   min-height: 300px;
   padding: 0.5rem;
+  padding-top: 20px;
   background: var(--main-bg-color);
   border-radius: 10px;
   border: 3px solid #eccccc;
@@ -94,19 +95,27 @@
   position: relative;
 }
 
+.modal-inner li {
+  list-style-type: none;
+  margin-left: 10px;
+}
+
 .modal-inner.open {
   transform: translateY(0);
 }
 
 .close-button {
-  position: absolute;
-  top: 1%;
-  left: 1%;
-  border-radius: 50%;
-  border: 2px solid #eccccc;
-  padding: 1px 6px;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.2);
+	position: absolute;
+	top: 1%;
+	left: 1%;
+	border-radius: 50%;
+	border: 2px solid #eccccc;
+	background: rgba(0, 0, 0, 0.2);
+	display: flex;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	font-size: 0.9rem;
 }
 
 .validation-inner {
@@ -152,6 +161,10 @@
 
 .validation-inner_confirm.open {
   opacity: 1;
+}
+
+.none {
+  display: none;
 }
 
 .visibility {

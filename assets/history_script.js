@@ -39,11 +39,29 @@ function addMonth() {
     shopping: getTotal('shopping'),
     travel: getTotal('travel'),
     balance: JSON.parse(localStorage.getItem('Balance')),
+    notes: JSON.parse(localStorage.getItem('Notebook')),
   }
   savedMonth.push(item)
   history.innerHTML = savedMonth.map(generateMonthsHTML).join('')
   localStorage.clear()
   localStorage.setItem('history', JSON.stringify(savedMonth))
+}
+
+function getNotes(arr) {
+  const notes = document.querySelector('.modal-inner ul')
+  //notes.classList.add('special')
+  if (arr) {
+    const notes = arr
+      .map(
+        (item) => `
+      <li>${item}</li>
+    `
+      )
+      .join('')
+    return notes
+  } else {
+    console.log('no notes')
+  }
 }
 
 function getTotal(columnName) {
@@ -69,8 +87,12 @@ function showMonthAnalysis(item) {
     <p>Shopping: ${item.shopping} pln</p>
     <p>Travel: ${item.travel} pln</p>
     </div>
+    <ul>Notes: ${getNotes(item.notes)}</ul>
     <p>Balance: ${item.balance} pln</p>
     `
+  if (!item.notes) {
+    modalInner.querySelector('ul').classList.add('none')
+  }
   modalOuter.classList.add('open')
   modalInner.classList.add('open')
   history.classList.add('visibility')
