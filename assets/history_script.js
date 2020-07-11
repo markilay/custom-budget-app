@@ -13,14 +13,123 @@ const months = [
   'December',
 ]
 
-const MODALTIMER = 2000
-let savedMonth = []
+function chart(item) {
+  const pie = document.getElementById('pieChart').getContext('2d')
+  pie.canvas.width = 250
+  pie.canvas.height = 250
+  const gradientFirst = pie.createLinearGradient(320, 50, 100, 0)
+  gradientFirst.addColorStop(0, '#e0b0cf')
+  gradientFirst.addColorStop(0.31, '#d5b2d3')
+  gradientFirst.addColorStop(0.65, '#beb5db')
+  gradientFirst.addColorStop(1, '#94bbe9')
+
+  const pieChart = new Chart(pie, {
+    responsive: true,
+    type: 'doughnut',
+    data: {
+      labels: ['Food', 'Coffee and Out', 'Other', 'Shopping', 'Travelling'],
+      datasets: [
+        {
+          hover: true,
+          hoverBorderWidth: 5,
+          hoverBorderColor: '#00000',
+          fill: true,
+          backgroundColor: [
+            gradientFirst,
+            gradientFirst,
+            gradientFirst,
+            gradientFirst,
+            gradientFirst,
+          ],
+          borderColor: 'rgb(255, 99, 132)',
+          data: [
+            item.food,
+            item.coffeeAndOut,
+            item.other,
+            item.shopping,
+            item.travel,
+          ],
+        },
+      ],
+    },
+    options: {
+      title: {
+        display: false,
+        text: `${item['month']} ${item['year']}`,
+      },
+      legend: {
+        display: false,
+      },
+
+      cutoutPercentage: 30,
+      animation: {
+        animateScale: true,
+      },
+    },
+  })
+
+  const bar = document.getElementById('barChart').getContext('2d')
+  bar.canvas.width = 400
+  bar.canvas.height = 400
+  const barChart = new Chart(bar, {
+    backgroundColor: 'rgb(255,255, 255)',
+    responsive: true,
+    type: 'bar',
+    data: {
+      labels: ['Food', 'Coffee and Out', 'Other', 'Shopping', 'Travelling'],
+      datasets: [
+        {
+          label: `${item['month']} ${item['year']}`,
+          data: [
+            item.food,
+            item.coffeeAndOut,
+            item.other,
+            item.shopping,
+            item.travel,
+          ],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+          ],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+    },
+  })
+}
+
 const saveButton = document.querySelector('button')
+const buttons = document.querySelector('.button_wrap')
 const history = document.querySelector('.history')
 const modalOuter = document.querySelector('.modal-outer')
 const modalInner = document.querySelector('.modal-inner')
 const validationModal = document.querySelector('.validation')
 const validationModalInner = document.querySelector('.validation-inner')
+const MODAL_TIMER = 2000
+let savedMonth = []
 
 const now = new Date()
 const monthIndex = now.getMonth() - 1
@@ -47,32 +156,32 @@ function addMonth() {
   localStorage.setItem('history', JSON.stringify(savedMonth))
 }
 
-function getNotes(arr) {
-  const notes = document.querySelector('.modal-inner ul')
-  //notes.classList.add('special')
-  if (arr) {
-    const notes = arr
-      .map(
-        (item) => `
+function getNotes(notes) {
+  return notes
+    .map(
+      (item) => `
       <li>${item}</li>
     `
-      )
-      .join('')
-    return notes
-  } else {
-    console.log('no notes')
-  }
+    )
+    .join('')
 }
 
 function getTotal(columnName) {
   const arr = JSON.parse(localStorage.getItem(`column - ${columnName}`))
+  if (!arr) return 0
   return arr.reduce((prev, next) => prev + next.price, 0).toFixed(2)
 }
-function generateMonthsHTML({ month, year }, id) {
-  return `<li id="${id}">${month} ${year}</li>`
+
+function generateMonthsHTML({ month, year }) {
+  return `<li data-month="${month}">${month} ${year}</li>`
 }
 
 function showMonthAnalysis(item) {
+  const notes =
+    !item.notes || item.notes.length === 0
+      ? ''
+      : `<ul>Notes: ${getNotes(item.notes)}</ul>`
+
   modalInner.innerHTML = `
     <span class='close-button'>x</span>
     <div>
@@ -87,23 +196,23 @@ function showMonthAnalysis(item) {
     <p>Shopping: ${item.shopping} pln</p>
     <p>Travel: ${item.travel} pln</p>
     </div>
-    <ul>Notes: ${getNotes(item.notes)}</ul>
+    ${notes}
     <p>Balance: ${item.balance} pln</p>
     `
-  if (!item.notes) {
-    modalInner.querySelector('ul').classList.add('none')
-  }
+  chart(item)
+
   modalOuter.classList.add('open')
   modalInner.classList.add('open')
   history.classList.add('visibility')
+  buttons.classList.add('visibility')
 
   modalInner
     .querySelector('.close-button')
     .addEventListener('click', (e) =>
       removeClassesHandler(
         e,
-        [history, modalInner, modalOuter],
-        ['visibility', 'open', 'open']
+        [buttons, history, modalInner, modalOuter],
+        ['visibility', 'visibility', 'open', 'open']
       )
     )
 }
@@ -129,32 +238,38 @@ function validation() {
   const yesBtn = validationModalInner.querySelector('.yes_button')
   const noBtn = validationModalInner.querySelector('.no_button')
 
-  warningText.textContent = `Are you ready to save month ${month} ${year} ?   All data will be reset after you confirm`
+  warningText.textContent = `Are you ready to save month ${month} ${year} ? All data will be reset after you confirm`
   validationModal.classList.add('open')
   history.classList.add('visibility')
+
   yesBtn.addEventListener('click', () => {
     validationModalInner
       .querySelector('.validation-inner_warning')
       .classList.add('close')
+
     addMonth()
     confirm.classList.add('open')
+
     setTimeout(function () {
       validationModal.classList.remove('open')
       history.classList.remove('visibility')
       confirm.classList.remove('open')
-    }, MODALTIMER)
+    }, MODAL_TIMER)
   })
+
   noBtn.addEventListener('click', (e) =>
     removeClassesHandler(e, [history, validationModal], ['visibility', 'open'])
   )
+
+  // We use window inside because validation modal is only avaible inside
   window.addEventListener('keyup', (e) => {
-    e.key === 'Escape'
-      ? removeClassesHandler(
-          e,
-          [history, validationModal],
-          ['visibility', 'open']
-        )
-      : console.log('what')
+    if (e.key === 'Escape') {
+      removeClassesHandler(
+        e,
+        [history, validationModal],
+        ['visibility', 'open']
+      )
+    }
   })
 }
 
@@ -165,32 +280,37 @@ function checkForMonth() {
 }
 
 saveButton.addEventListener('click', () =>
-  localStorage.length > 3
+  localStorage.getItem('Income')
     ? checkForMonth()
-    : alert("You don't have any data in your budget. You can't save this month")
+    : alert(
+        "You don't have any data or income in your budget. You can't save this month"
+      )
 )
 
 history.addEventListener('click', function (e) {
-  savedMonth.forEach((month, id) =>
-    id == +e.target.id ? showMonthAnalysis(month) : console.log('wrong month')
-  )
+  savedMonth.forEach((month, id) => {
+    const { month: monthName } = month
+    if (monthName === e.target.dataset.month) {
+      showMonthAnalysis(month)
+    }
+  })
 
   window.addEventListener('keyup', (e) => {
     if (e.key === 'Escape') {
       removeClassesHandler(
         e,
-        [history, modalInner, modalOuter],
-        ['visibility', 'open', 'open']
+        [buttons, history, modalInner, modalOuter],
+        ['visibility', 'visibility', 'open', 'open']
       )
-    } else return window
+    }
   })
 })
 
 modalOuter.addEventListener('click', (e) =>
   removeClassesHandler(
     e,
-    [history, modalInner, modalOuter],
-    ['visibility', 'open', 'open']
+    [buttons, history, modalInner, modalOuter],
+    ['visibility', 'visibility', 'open', 'open']
   )
 )
 

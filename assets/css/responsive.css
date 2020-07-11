@@ -59,14 +59,17 @@
   .monthlyColumns {
     display: flex;
     justify-content: flex-start;
-    overflow-x: scroll;
+    flex-direction: column;
+    overflow-x: hidden;
     padding: 30px 0;
+    height: 100%;
   }
 
   .amount {
     font-size: 0.8rem;
-    width: 60px;
-    margin-left: 30px;
+    width: 100px;
+    max-width: 100%;
+    margin-left: 80px;
   }
 
   .monthlyColumns input {
@@ -76,23 +79,6 @@
     background-color: rgb(224, 221, 221);
   }
 
-  .columns {
-    margin-right: 10px;
-    height: 325px;
-  }
-
-  .columns:hover {
-    box-shadow: none;
-    transform: none;
-  }
-
-  .column_title {
-    font-size: 0.9rem;
-  }
-
-  .shopping-item {
-    font-size: 0.8rem;
-  }
   form {
     display: grid;
     grid-template-rows: repeat(3, 1fr);
@@ -110,7 +96,52 @@
     margin-top: 5px !important;
   }
 
+  .columns {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .columns:hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .column_title {
+    font-size: 0.9rem;
+  }
+
+  .open {
+    height: 140px;
+  }
+
+  .shopping-item {
+    font-size: 0.8rem;
+  }
+
   .sum-section {
     margin: 0 auto;
+    padding: 5px;
+  }
+
+  .modal-outer {
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-height: 100vh;
+    overflow: scroll;
+  }
+
+  .modal-inner {
+    transform: translateY(-1000px);
+  }
+  .modal-inner.open {
+    transform: translateY(0);
+  }
+
+  .bar-canvas-container {
+    display: none;
+  }
+
+  .pie-canvas-container {
+    display: block !important;
   }
 }

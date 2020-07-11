@@ -25,7 +25,9 @@
       <div class="validation-inner">
         <div class="validation-inner_warning">
           <p>Warning !!!</p>
-          <button class="yes_button main-button_style">YES</button>
+          <button type="submit" class="yes_button main-button_style">
+            YES
+          </button>
           <button class="no_button main-button_style">NO</button>
         </div>
         <p class="validation-inner_confirm">
@@ -36,7 +38,16 @@
     </div>
     <div class="modal-outer">
       <div class="modal-inner"></div>
+      <div class="bar-canvas-container">
+        <canvas id="barChart"></canvas>
+      </div>
+      <div class="pie-canvas-container">
+        <canvas id="pieChart"></canvas>
+      </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
     <script src="./assets/history_script.js"></script>
   </body>
 </html>
