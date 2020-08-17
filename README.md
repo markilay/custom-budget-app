@@ -1,4 +1,4 @@
 # budget app
 <h3>Simple app to keep your expenses with ability to store them by months.</h3>
 <p> Finally I've created my custom <a href="https://makeshift-breath.surge.sh/">budget app</a> to keep my all expenses on my phone </p>
-<a href="https://imgbb.com/"><img src="https://i.ibb.co/ZdgTSsT/budget-app.png" alt="budget-app" border="0"></a>
+<a href="https://makeshift-breath.surge.sh/index.html"><img src="https://i.ibb.co/ZdgTSsT/budget-app.png" alt="budget-app" border="0"></a>
