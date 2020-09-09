@@ -30,6 +30,7 @@ body {
 }
 
 .main-button_style {
+  position: relative;
   cursor: pointer;
   background-color: black;
   border-radius: 20px;
@@ -41,6 +42,67 @@ body {
   font-weight: normal;
   text-decoration: none;
   font-size: var(--main-font-size);
+  transition: transform 0.2s;
+}
+
+.black-btn:focus {
+  -webkit-box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.92);
+  -moz-box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.92);
+  box-shadow: 0px 0px 18px 0px rgba(0, 0, 0, 0.92);
+}
+
+.black-btn:before {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  position: absolute;
+  content: '';
+  height: 100%;
+}
+
+.black-btn:hover:before {
+  animation: focus-left 0.5s;
+  animation-fill-mode: forwards;
+  background-color: rgba(180, 180, 180, 0.336);
+}
+
+@keyframes focus-left {
+  0% {
+    width: 0;
+    left: 50%;
+  }
+  100% {
+    width: 50%;
+    left: 0;
+  }
+}
+
+.black-btn:after {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  position: absolute;
+  content: '';
+  height: 100%;
+}
+
+.black-btn:hover:after {
+  animation: focus-right 0.5s;
+  background-color: rgba(180, 180, 180, 0.336);
+}
+
+@keyframes focus-right {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 50%;
+  }
 }
 
 * {
