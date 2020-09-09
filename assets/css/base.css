@@ -29,6 +29,21 @@ body {
   transition: all 0.5s;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+hr {
+  margin: 0.5rem 0;
+}
+
+input {
+  padding: 2px;
+  outline: none;
+}
+
 .main-button_style {
   position: relative;
   cursor: pointer;
@@ -103,18 +118,4 @@ body {
   100% {
     width: 50%;
   }
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-hr {
-  margin: 0.5rem 0;
-}
-
-input {
-  padding: 2px;
 }
